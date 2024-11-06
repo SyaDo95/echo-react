@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import HomePage from './HomePage.jsx';
 import ChatInterface from './ChatInterface.jsx';
 import CreateProcess from './CreateProcess.jsx';
+import black from './Avatars/black_guy.png';
+import white from './Avatars/White_guy.png';
+import mexican from './Avatars/Mexican_girl.png';
+import asian from './Avatars/Asian_girl.png';
+
+
 
 function App() {
   const [selectedCharacter, setSelectedCharacter] = useState(null);
@@ -10,10 +16,10 @@ function App() {
   const [showCreateProcess, setShowCreateProcess] = useState(false);
 
   const characters = [
-    { index: 0, name: 'Black Rapper', description: 'black friend', image: './Avatars/3d_avatar_9.png' },
-    { index: 1, name: 'White IT Developer', description: 'white guy', image: 'path/to/white_it_developer_image' },
-    { index: 2, name: 'Maxican American', description: 'hispanic girl', image: 'path/to/asian_american_image' },
-    { index: 3, name: 'Asian American', description: 'Asian girl', image: 'path/to/announcer_image' }
+    { index: 0, name: 'Black Rapper', description: 'black friend', image: black },
+    { index: 1, name: 'White IT Developer', description: 'white guy', image: white },
+    { index: 2, name: 'Maxican American', description: 'hispanic girl', image: mexican },
+    { index: 3, name: 'Asian American', description: 'Asian girl', image: asian }
 ];
 
   const handleCharacterSelect = (character) => {
