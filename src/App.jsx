@@ -10,10 +10,10 @@ function App() {
   const [showCreateProcess, setShowCreateProcess] = useState(false);
 
   const characters = [
-    { index: 0, name: 'Black Rapper', description: 'Yo! Let"s rap together!', image: 'path/to/black_rapper_image' },
+    { index: 0, name: 'Black Rapper', description: '...', image: 'path/to/black_rapper_image' },
     { index: 1, name: 'White IT Developer', description: '...', image: 'path/to/white_it_developer_image' },
-    { index: 2, name: 'Asian American', description: '...', image: 'path/to/asian_american_image' },
-    { index: 3, name: 'Woman aspiring to become an announcer', description: '...', image: 'path/to/announcer_image' }
+    { index: 2, name: 'Maxican American', description: '...', image: 'path/to/asian_american_image' },
+    { index: 3, name: 'Asian American', description: '...', image: 'path/to/announcer_image' }
 ];
 
   const handleCharacterSelect = (character) => {
