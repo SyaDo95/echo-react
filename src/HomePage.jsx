@@ -1,15 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './HomePage.css';
 import { auth, provider, signInWithPopup } from './firebase';
+import LoginPopup from './LoginPopup';
+import RegisterPopup from './RegisterPopup'; // RegisterPopup 임포트 추가
 
-function HomePage({ characters, onCharacterSelect, onShowCreateProcess }) {
+function HomePage({ characters, onCharacterSelect, onShowCreateProcess, onShowMyPage }) {
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [showRegisterPopup, setShowRegisterPopup] = useState(false); // RegisterPopup 상태 추가
+
+  const openPopup = () => setIsPopupOpen(true);
+  const closePopup = () => {
+    setIsPopupOpen(false);
+    setShowRegisterPopup(false); // 팝업 닫을 때 RegisterPopup도 닫기
+  };
+
   // Google 로그인 팝업 창을 띄워 회원가입 및 로그인 처리
   const handleGoogleRegister = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       console.log("Google 로그인 성공:", user);
-      // 로그인 또는 회원가입 성공 후 추가 로직을 여기서 수행 (예: 사용자 정보 저장, 리디렉션 등)
     } catch (error) {
       console.error("Google 로그인 오류:", error);
     }
@@ -27,17 +37,16 @@ function HomePage({ characters, onCharacterSelect, onShowCreateProcess }) {
           <p>welcome</p>
         </div>
         <div className="auth-buttons">
-          <button className="sign-in" onClick={handleGoogleRegister}>Sign in</button>
-          <button className="register" onClick={handleGoogleRegister}>Register</button>
+          <button className="sign-in" onClick={openPopup}>Sign in</button>
+          <button className="register" onClick={() => setShowRegisterPopup(true)}>Register</button> {/* 수정됨 */}
         </div>
       </header>
 
       <nav className="menu">
         <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Home</button>
         <button onClick={handleScrollToCharacters}>Character</button>
-        <button>Chatting</button>
         <button onClick={onShowCreateProcess}>Create</button>
-        <button>My page</button>
+        <button onClick={onShowMyPage}>My Page</button>
       </nav>
 
       <section className="main-section">
@@ -64,6 +73,9 @@ function HomePage({ characters, onCharacterSelect, onShowCreateProcess }) {
           ))}
         </div>
       </section>
+
+      {isPopupOpen && <LoginPopup onClose={closePopup} />} {/* 로그인 팝업 추가 */}
+      {showRegisterPopup && <RegisterPopup onClose={closePopup} />} {/* RegisterPopup 추가 */}
     </div>
   );
 }

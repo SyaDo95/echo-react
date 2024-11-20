@@ -1,0 +1,64 @@
+/* RegisterPopup 전체 화면 어두운 오버레이 */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 100; /* 팝업보다 뒤에 표시되도록 설정 */
+  }
+  
+  /* RegisterPopup 메인 컨테이너 */
+  .register-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 101; /* 오버레이 위에 표시되도록 설정 */
+    width: 918px;
+    height: 949px;
+    background: white;
+    border-radius: 25px;
+    border: 3px solid #d9d9d9;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* 텍스트 및 버튼 스타일링 */
+  .register-popup .title {
+    text-align: center;
+    font-size: 40px;
+    font-family: 'Judson', serif;
+    color: black;
+    margin-bottom: 20px;
+  }
+  
+  .register-popup .form-field {
+    margin: 10px 0;
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
+    font-size: 16px;
+  }
+  
+  .register-popup .form-button {
+    margin-top: 20px;
+    padding: 15px;
+    width: 80%;
+    background: #ffe486;
+    border: none;
+    border-radius: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    color: black;
+  }
+  
+  .register-popup .form-button:hover {
+    background: #ffd700;
+  }
+  

@@ -1,12 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './ChatInterface.css';
 
-function ChatInterface({ character, onBackToHome }) {
-  const [chatHistory, setChatHistory] = useState([
-    { sender: 'character', text: "Hey! What's up?" },
-    { sender: 'user', text: "Hi! Recommend a lunch menu!!" },
-    { sender: 'character', text: "oh! Then how about tteokbokki?" }
-  ]);
+function ChatInterface({ character, selectedOptions, onBackToHome }) {
+  const [chatHistory, setChatHistory] = useState([]);
   const [message, setMessage] = useState('');
 
   // Ref for the chat history container to scroll
@@ -16,6 +12,9 @@ function ChatInterface({ character, onBackToHome }) {
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chatHistory]);
+
+  // 선택된 옵션을 기반으로 문장을 생성
+  const description = selectedOptions.join(' '); // 선택된 옵션을 공백으로 연결
 
   // 메시지 전송 핸들러
   const handleSendMessage = async () => {
