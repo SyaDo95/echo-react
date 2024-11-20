@@ -40,7 +40,7 @@ function RegisterPopup({ onClose }) {
           <div style={{
             textAlign: 'center',
             color: 'black',
-            fontSize: 28,
+            fontSize: 24,
             fontFamily: 'Judson',
             fontWeight: '400',
             marginBottom: 20,
