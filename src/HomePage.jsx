@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './HomePage.css';
-import { auth, provider, signInWithPopup } from './firebase';
 
-function HomePage({ characters, onCharacterSelect, onShowCreateProcess, setUid }) {
+function HomePage({ characters, onCharacterSelect, onShowCreateProcess, onShowMyPage, setUid }) {
   const handleGoogleSignIn = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
       const uid = result.user.uid;
       console.log('Logged in UID:', uid);
-      setUid(uid); // UID 저장
+      setUid(uid);
     } catch (error) {
       console.error('Login Error:', error);
     }
@@ -26,17 +25,20 @@ function HomePage({ characters, onCharacterSelect, onShowCreateProcess, setUid }
           <p>welcome</p>
         </div>
         <div className="auth-buttons">
-          <button className="sign-in" onClick={handleGoogleSignIn}>Sign in</button>
-          <button className="register" onClick={handleGoogleSignIn}>Register</button>
+          <button className="sign-in" onClick={handleGoogleSignIn}>
+            Sign in
+          </button>
+          <button className="register" onClick={handleGoogleSignIn}>
+            Register
+          </button>
         </div>
       </header>
 
       <nav className="menu">
         <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Home</button>
         <button onClick={handleScrollToCharacters}>Character</button>
-        <button>Chatting</button>
         <button onClick={onShowCreateProcess}>Create</button>
-        <button>My page</button>
+        <button onClick={onShowMyPage}>My Page</button>
       </nav>
 
       <section className="main-section">

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import './CreateProcess.css';
 
-function CreateProcess({ onBackToHome }) {
+function CreateProcess({ onBackToHome, onComplete }) {
   const questions = [
-    { id: 1, question: "What's your job?", options: ["student", "teacher", "police", "singer", "programer", "sportsman", "unemployed", "other"] },
+    { id: 1, question: "What's your job?", options: ["student", "teacher", "police", "singer", "programmer", "sportsman", "unemployed", "other"] },
     { id: 2, question: "What's your age?", options: ["0-5", "5-10", "10-20", "20-30", "30-40", "40-50", "50-60", "other"] },
-    { id: 3, question: "What's your hobby?", options: ["science", "dancing", "police", "singer", "programer", "sportsman", "unemployed", "other"] },
-    { id: 4, question: "What's your favorite food?", options: ["pizza", "sushi", "burger", "pasta", "salad", "steak", "tacos", "other"] },
-    { id: 5, question: "What's your favorite color?", options: ["red", "blue", "green", "yellow", "purple", "black", "white", "other"] },
+    { id: 3, question: "What's your hobby?", options: ["science", "dancing", "sports", "singing", "programming", "other"] },
+    { id: 4, question: "What's your favorite food?", options: ["pizza", "sushi", "burger", "pasta", "salad", "steak", "tacos"] },
+    { id: 5, question: "What's your favorite color?", options: ["red", "blue", "green", "yellow", "purple", "black", "white"] },
   ];
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -32,11 +32,15 @@ function CreateProcess({ onBackToHome }) {
     }
   };
 
+  const handleGoToChatting = () => {
+    onComplete(selectedOptions); // 선택된 옵션을 전달하며 ChatInterface로 전환
+  };
+
   return (
     <div className="create-process">
       <header className="header">
         <button onClick={handleBackClick} className="back-button">←</button>
-        <h1>create your friend</h1>
+        <h1>Create your friend</h1>
       </header>
 
       {isComplete ? (
@@ -48,6 +52,9 @@ function CreateProcess({ onBackToHome }) {
               <span key={index} className="selection-item">{option}</span>
             ))}
           </div>
+          <button className="go-to-chatting-button" onClick={handleGoToChatting}>
+            Go to Chatting
+          </button>
         </div>
       ) : (
         <div className="question-container">

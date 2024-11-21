@@ -17,7 +17,7 @@ function ChatInterface({ character, onBackToHome, uid }) {
       }
     };
 
-    if (uid) fetchChatHistory(); // uid가 유효할 때만 호출
+    if (uid) fetchChatHistory();
   }, [uid]);
 
   const handleSendMessage = async () => {
@@ -52,7 +52,9 @@ function ChatInterface({ character, onBackToHome, uid }) {
   return (
     <div className="chat-container">
       <div className="chat-history-container">
-        <button className="back-button" onClick={onBackToHome}>←</button>
+        <button className="back-button" onClick={onBackToHome}>
+          ←
+        </button>
         <h2>Chat History</h2>
         <div className="chat-list">
           <div className="chat-avatar">
@@ -82,7 +84,9 @@ function ChatInterface({ character, onBackToHome, uid }) {
             onChange={(e) => setMessage(e.target.value)}
             onKeyPress={handleKeyPress}
           />
-          <button onClick={handleSendMessage} className="send-button">Send</button>
+          <button onClick={handleSendMessage} className="send-button">
+            Send
+          </button>
         </div>
       </div>
     </div>
