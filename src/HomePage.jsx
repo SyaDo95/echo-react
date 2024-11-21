@@ -2,16 +2,15 @@ import React from 'react';
 import './HomePage.css';
 import { auth, provider, signInWithPopup } from './firebase';
 
-function HomePage({ characters, onCharacterSelect, onShowCreateProcess }) {
-  // Google 로그인 팝업 창을 띄워 회원가입 및 로그인 처리
-  const handleGoogleRegister = async () => {
+function HomePage({ characters, onCharacterSelect, onShowCreateProcess, setUid }) {
+  const handleGoogleSignIn = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      console.log("Google 로그인 성공:", user);
-      // 로그인 또는 회원가입 성공 후 추가 로직을 여기서 수행 (예: 사용자 정보 저장, 리디렉션 등)
+      const uid = result.user.uid;
+      console.log('Logged in UID:', uid);
+      setUid(uid); // UID 저장
     } catch (error) {
-      console.error("Google 로그인 오류:", error);
+      console.error('Login Error:', error);
     }
   };
 
@@ -27,8 +26,8 @@ function HomePage({ characters, onCharacterSelect, onShowCreateProcess }) {
           <p>welcome</p>
         </div>
         <div className="auth-buttons">
-          <button className="sign-in" onClick={handleGoogleRegister}>Sign in</button>
-          <button className="register" onClick={handleGoogleRegister}>Register</button>
+          <button className="sign-in" onClick={handleGoogleSignIn}>Sign in</button>
+          <button className="register" onClick={handleGoogleSignIn}>Register</button>
         </div>
       </header>
 
