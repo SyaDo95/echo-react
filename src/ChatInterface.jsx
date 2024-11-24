@@ -6,10 +6,27 @@ function ChatInterface({ character, onBackToHome, uid }) {
   const [message, setMessage] = useState('');
   const chatEndRef = useRef(null);
 
+  // 더미 데이터를 생성하는 함수
+  const generateDummyResponse = (botIndex) => {
+    switch (botIndex) {
+      case 0:
+        return "Hello! I'm the black guy who loves rap and basketball!";
+      case 1:
+        return "Hi there! I'm the white guy who enjoys programming and Overwatch2.";
+      case 2:
+        return "Hola! I'm a Hispanic woman who dreams of being a sports reporter!";
+      case 3:
+        return "Hey! I'm an Asian American who loves K-pop and anime!";
+      default:
+        return "Hi! I'm just a simple chatbot.";
+    }
+  };
+
   useEffect(() => {
     const fetchChatHistory = async () => {
       try {
         const response = await fetch(`http://localhost:8080/api/chat/history/${uid}`);
+        if (!response.ok) throw new Error(`Error fetching history: ${response.status}`);
         const data = await response.json();
         setChatHistory(data.map(chat => ({ sender: chat.sender, text: chat.message })));
       } catch (error) {
@@ -20,28 +37,41 @@ function ChatInterface({ character, onBackToHome, uid }) {
     if (uid) fetchChatHistory();
   }, [uid]);
 
+  // 채팅이 업데이트될 때 스크롤을 가장 아래로 이동
+  useEffect(() => {
+    if (chatEndRef.current) {
+      chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [chatHistory]);
+
   const handleSendMessage = async () => {
     if (message.trim() === '') return;
 
-    setChatHistory([...chatHistory, { sender: 'user', text: message }]);
+    setChatHistory((prev) => [...prev, { sender: 'user', text: message }]);
     setMessage('');
 
     try {
-      const response = await fetch('http://localhost:8080/api/chat', {
+      const response = await fetch('http://localhost:8080/api/chat/save', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          user: { uid },
+          uid,
           botIndex: character.index,
           message,
           sender: 'user',
         }),
       });
-      const reply = await response.json();
-      setChatHistory((prev) => [...prev, { sender: 'bot', text: reply }]);
+
+      if (!response.ok) throw new Error(`Error: ${response.status}`);
+
+      const data = await response.json();
+      setChatHistory((prev) => [...prev, { sender: 'bot', text: data.reply }]); // 서버 응답 처리
     } catch (error) {
       console.error('Error sending message:', error);
-      setChatHistory((prev) => [...prev, { sender: 'bot', text: 'Error: Unable to fetch response.' }]);
+
+      // 더미 데이터를 표시
+      const dummyResponse = generateDummyResponse(character.index);
+      setChatHistory((prev) => [...prev, { sender: 'bot', text: dummyResponse }]);
     }
   };
 
