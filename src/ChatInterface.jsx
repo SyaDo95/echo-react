@@ -25,7 +25,7 @@ function ChatInterface({ character, onBackToHome, uid }) {
   useEffect(() => {
     const fetchChatHistory = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/chat/history/${uid}`);
+        const response = await fetch(`http://localhost:8080/api/chat/history/${uid}/${character.index}`);
         if (!response.ok) throw new Error(`Error fetching history: ${response.status}`);
         const data = await response.json();
         setChatHistory(data.map(chat => ({ sender: chat.sender, text: chat.message })));
@@ -33,9 +33,10 @@ function ChatInterface({ character, onBackToHome, uid }) {
         console.error('Error fetching chat history:', error);
       }
     };
-
+  
     if (uid) fetchChatHistory();
-  }, [uid]);
+  }, [uid, character.index]);
+  
 
   // 채팅이 업데이트될 때 스크롤을 가장 아래로 이동
   useEffect(() => {
