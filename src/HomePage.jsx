@@ -1,8 +1,19 @@
 import React, { useState } from 'react';
 import './HomePage.css';
 import { auth, provider, signInWithPopup } from './firebase'; // firebase.js에서 필요한 모듈 가져오기
+import LoginPopup from './LoginPopup';
+import RegisterPopup from './RegisterPopup'; // RegisterPopup 임포트 추가
 
 function HomePage({ characters, onCharacterSelect, onShowCreateProcess, onShowMyPage, setUid }) {
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [showRegisterPopup, setShowRegisterPopup] = useState(false); // RegisterPopup 상태 추가
+
+  const openPopup = () => setIsPopupOpen(true);
+  const closePopup = () => {
+    setIsPopupOpen(false);
+    setShowRegisterPopup(false); // 팝업 닫을 때 RegisterPopup도 닫기
+  };
+
   const handleGoogleSignIn = async () => {
     try {
       const result = await signInWithPopup(auth, provider); // Firebase 인증
@@ -28,10 +39,10 @@ function HomePage({ characters, onCharacterSelect, onShowCreateProcess, onShowMy
           <p>welcome</p>
         </div>
         <div className="auth-buttons">
-          <button className="sign-in" onClick={handleGoogleSignIn}>
+          <button className="sign-in" onClick={openPopup}>
             Sign in
           </button>
-          <button className="register" onClick={handleGoogleSignIn}>
+          <button className="register" onClick={() => setShowRegisterPopup(true)}>
             Register
           </button>
         </div>
@@ -68,8 +79,12 @@ function HomePage({ characters, onCharacterSelect, onShowCreateProcess, onShowMy
           ))}
         </div>
       </section>
+      {isPopupOpen && <LoginPopup onClose={closePopup} setUid={setUid} />}
+      {showRegisterPopup && <RegisterPopup onClose={closePopup} />} {/* RegisterPopup 추가 */}
     </div>
   );
 }
+
+
 
 export default HomePage;

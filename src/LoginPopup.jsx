@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './LoginPopup.css';
 import GoogleLogin from './GoogleLogin';
 
-function LoginPopup({ onClose }) {
+function LoginPopup({ onClose, setUid }) {
   const [credentials, setCredentials] = useState({ id: '', password: '' });
 
   const handleChange = (e) => {
@@ -18,7 +18,7 @@ function LoginPopup({ onClose }) {
           <div
             style={{
               width: 400,
-              height: 300,
+              height: 350,
               position: 'absolute',
               background: 'white',
               borderRadius: 25,
@@ -86,8 +86,7 @@ function LoginPopup({ onClose }) {
             }}
           />
 
-          {/* Google 로그인 버튼 */}
-          <div
+      <div
             style={{
               width: 350,
               height: 50,
@@ -101,7 +100,25 @@ function LoginPopup({ onClose }) {
               justifyContent: 'center',
             }}
           >
-            <GoogleLogin />
+            <button onClick={onClose}>echo로 로그인</button>
+          </div>
+
+          {/* Google 로그인 버튼 */}
+          <div
+            style={{
+              width: 350,
+              height: 50,
+              position: 'absolute',
+              top: 270,
+              left: 25,
+              background: '#FFE486',
+              borderRadius: '0 20px 20px 20px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <GoogleLogin setUid={setUid} onClose={onClose} />
           </div>
         </div>
       </div>
