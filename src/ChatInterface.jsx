@@ -54,45 +54,55 @@ function ChatInterface({ character, onBackToHome, uid, isNewChatbot = false }) {
   const handleSendMessage = async () => {
     if (message.trim() === '') return;
   
+    // 사용자 메시지 추가
     setChatHistory((prev) => [...prev, { sender: 'user', text: message }]);
+    const userMessage = message; // 현재 메시지 저장
     setMessage('');
   
     try {
       if (isNewChatbot) {
+        // 새로운 챗봇과의 대화
+        console.log('Sending message to NewChatbot API:', userMessage);
+  
         const response = await fetch('http://localhost:8080/api/newchatbot/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(message),
+          body: JSON.stringify({ userInput: userMessage }), // JSON 객체로 전송
+        });
+  
+        if (!response.ok) {
+          console.error(`Error: ${response.status}`);
+          throw new Error(`Failed to fetch response from NewChatbot API`);
+        }
+  
+        const botResponse = await response.text();
+        console.log('Response from NewChatbot API:', botResponse);
+  
+        // 챗봇 응답 추가
+        setChatHistory((prev) => [...prev, { sender: 'bot', text: botResponse }]);
+      } else {
+        // 기존 챗봇과의 대화
+        const response = await fetch('http://localhost:8080/api/chat/save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            uid,
+            botIndex: character.index,
+            message: userMessage,
+            sender: 'user',
+          }),
         });
   
         if (!response.ok) throw new Error(`Error: ${response.status}`);
-  
-        const botResponse = await response.text();
-        setChatHistory((prev) => [...prev, { sender: 'bot', text: botResponse }]);
-        return;
+        const data = await response.json();
+        setChatHistory((prev) => [...prev, { sender: 'bot', text: data.reply }]);
       }
-  
-      // 기존 챗봇 로직
-      const response = await fetch('http://localhost:8080/api/chat/save', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          uid,
-          botIndex: character.index,
-          message,
-          sender: 'user',
-        }),
-      });
-  
-      if (!response.ok) throw new Error(`Error: ${response.status}`);
-  
-      const data = await response.json();
-      setChatHistory((prev) => [...prev, { sender: 'bot', text: data.reply }]);
     } catch (error) {
       console.error('Error sending message:', error);
+  
       const errorResponse = isNewChatbot
         ? 'The chatbot is currently unavailable. Please try again later.'
-        : generateDummyResponse(character.index);
+        : 'No valid response from bot.';
       setChatHistory((prev) => [...prev, { sender: 'bot', text: errorResponse }]);
     }
   };
@@ -107,7 +117,7 @@ function ChatInterface({ character, onBackToHome, uid, isNewChatbot = false }) {
         <button className="back-button" onClick={onBackToHome}>
           ←
         </button>
-        <h2>{isNewChatbot ? character.job : 'Chat History'}</h2> {/* 새 챗봇의 경우 직업 표시 */}
+        <h2>{isNewChatbot ? 'New Friend' : 'Chat History'}</h2> {/* 새 챗봇의 경우 직업 표시 */}
         <div className="chat-list">
           <div className="chat-avatar">
             {isNewChatbot ? (
@@ -122,9 +132,9 @@ function ChatInterface({ character, onBackToHome, uid, isNewChatbot = false }) {
         </div>
       </div>
       <div className="chat-box">
-        <div className="chat-header">
+              <div className="chat-header">
           {isNewChatbot ? (
-            <span>{character.job}</span> // 새 챗봇은 직업만 표시
+            <span>{character.name} - {character.job}</span> // 이름과 직업 모두 표시
           ) : (
             <>
               <img src={character.image} alt={character.name} className="character-avatar" />
