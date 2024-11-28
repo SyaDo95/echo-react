@@ -1,124 +1,139 @@
 .create-process {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100vh;
-    text-align: center;
-    background-color: #fff;
-  }
-  
-  .header {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    background-color: #ffea85;
-    padding: 10px 20px;
-  }
-  
-  .back-button {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    margin-right: 10px;
-  }
-  
-  .header h1 {
-    font-size: 20px;
-    margin: 0;
-    flex-grow: 1;
-  }
-  
-  .question-container {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  
-  .question-container h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .options-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    justify-items: center;
-  }
-  
-  .option-button {
-    width: 150px;
-    padding: 10px;
-    background-color: #e0e0e0;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .option-button:hover {
-    background-color: #d0d0d0;
-  }
-  
-  .progress-footer {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-    justify-content: space-between;
-  }
-  
-  .progress-bar {
-    flex-grow: 1;
-    height: 8px;
-    background-color: #e0e0e0;
-    border-radius: 4px;
-    margin-right: 10px;
-    overflow: hidden;
-  }
-  
-  .progress-bar-fill {
-    height: 100%;
-    background-color: #ffea85;
-    transition: width 0.3s ease;
-  }
-  
-  /* Completion Screen */
-  .completion-screen {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-  }
-  
-  .completion-screen h2 {
-    font-size: 24px;
-    color: #333;
-  }
-  
-  .completion-screen p {
-    font-size: 18px;
-    color: #666;
-  }
-  
-  .selections {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 10px;
-  }
-  
-  .selection-item {
-    padding: 8px 12px;
-    background-color: #ffea85;
-    border-radius: 5px;
-    font-size: 16px;
-    color: #333;
-  }
-  /* Go to Chatting Button */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  background-color: #fff;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: #ffea85;
+  padding: 10px 20px;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.header h1 {
+  font-size: 20px;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.question-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.question-container h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  justify-items: center;
+}
+
+.option-button,
+.option-input-as-button {
+  width: 150px;
+  padding: 10px;
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* 공통 hover 효과 */
+.option-button:hover,
+.option-input-as-button:hover {
+  background-color: #d0d0d0;
+}
+
+/* 입력 가능한 필드에 포커스 효과 추가 */
+.option-input-as-button {
+  cursor: text; /* 텍스트 필드임을 명확히 */
+}
+
+.option-input-as-button:focus {
+  outline: none;
+  border: 2px solid #ffea85;
+  background-color: #ffffff;
+}
+
+.progress-footer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  justify-content: space-between;
+}
+
+.progress-bar {
+  flex-grow: 1;
+  height: 8px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  margin-right: 10px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: #ffea85;
+  transition: width 0.3s ease;
+}
+
+.completion-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.completion-screen h2 {
+  font-size: 24px;
+  color: #333;
+}
+
+.completion-screen p {
+  font-size: 18px;
+  color: #666;
+}
+
+.selections {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.selection-item {
+  padding: 8px 12px;
+  background-color: #ffea85;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #333;
+}
+
 .go-to-chatting-button {
   margin-top: 20px;
   padding: 12px 24px;
@@ -133,19 +148,4 @@
 
 .go-to-chatting-button:hover {
   background-color: #ffd54f;
-}
-
-.completion-screen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
-}
-
-.selections {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-  margin-top: 10px;
 }

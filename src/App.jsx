@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import HomePage from './HomePage.jsx';
 import ChatInterface from './ChatInterface.jsx';
 import CreateProcess from './CreateProcess.jsx';
@@ -23,6 +23,11 @@ function App() {
     { index: 2, name: 'Mexican American', description: 'hispanic girl', image: mexican },
     { index: 3, name: 'Asian American', description: 'Asian girl', image: asian },
   ];
+
+  // 디버깅용 useEffect 추가
+  useEffect(() => {
+    console.log("selectedCharacter updated:", selectedCharacter);
+  }, [selectedCharacter]);
 
   const handleCharacterSelect = (character) => {
     setSelectedCharacter(character);
@@ -52,6 +57,13 @@ function App() {
     setShowMyPage(true);
   };
 
+  const handleCreateProcessComplete = (newChatbotData) => {
+    console.log("New chatbot data received:", newChatbotData);
+    setSelectedCharacter(newChatbotData);
+    console.log("Updated selectedCharacter:", newChatbotData);
+    setShowCreateProcess(false);
+    setShowChatInterface(true);
+  };
   return (
     <div>
       {showHomePage && (
@@ -68,9 +80,15 @@ function App() {
           character={selectedCharacter}
           onBackToHome={handleBackToHome}
           uid={currentUserUid}
+          isNewChatbot={selectedCharacter?.index === 999} // 새 챗봇 여부
         />
       )}
-      {showCreateProcess && <CreateProcess onBackToHome={handleBackToHome} />}
+      {showCreateProcess && (
+        <CreateProcess
+          onBackToHome={handleBackToHome}
+          onComplete={handleCreateProcessComplete} // 콜백 전달
+        />
+      )}
       {showMyPage && <MyPage onBackToHome={handleBackToHome} />}
     </div>
   );
