@@ -18,10 +18,10 @@ function App() {
   const [showMyPage, setShowMyPage] = useState(false);
 
   const characters = [
-    { index: 0, name: 'Black Rapper', description: 'black friend', image: black },
-    { index: 1, name: 'White IT Developer', description: 'white guy', image: white },
-    { index: 2, name: 'Mexican American', description: 'hispanic girl', image: mexican },
-    { index: 3, name: 'Asian American', description: 'Asian girl', image: asian },
+    { index: 0, name: 'Jun', description: 'Black cool guy', image: black },
+    { index: 1, name: 'Adam', description: 'White smart guy', image: white },
+    { index: 2, name: 'Camila', description: 'Hispanic fun girl', image: mexican },
+    { index: 3, name: 'Seulbee', description: 'Asian cute girl', image: asian },
   ];
 
   // 디버깅용 useEffect 추가
